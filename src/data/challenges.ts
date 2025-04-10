@@ -709,4 +709,265 @@ function mergeTwoLists(list1, list2) {
   return s.substring(start, start + maxLength);
 }`
   },
+  {
+    id: '14',
+    title: 'Number of Islands',
+    difficulty: 'Medium',
+    category: 'Graphs',
+    description: 'Given an m x n 2D binary grid which represents a map of \'1\'s (land) and \'0\'s (water), return the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.',
+    starterCode: `function numIslands(grid) {
+  // Your code here
+}`,
+    testCases: [
+      {
+        input: 'grid = [["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]]',
+        expected: '1',
+      },
+      {
+        input: 'grid = [["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]',
+        expected: '3',
+      },
+      {
+        input: 'grid = [["1","0","1"],["0","1","0"],["1","0","1"]]',
+        expected: '5',
+        isHidden: true,
+      },
+    ],
+    hints: [
+      'Try using depth-first search (DFS) or breadth-first search (BFS) to traverse the grid.',
+      'When you find a land cell (\'1\'), explore all its connected land cells and mark them as visited.',
+    ],
+    solution: `function numIslands(grid) {
+  if (!grid || grid.length === 0) return 0;
+  
+  const rows = grid.length;
+  const cols = grid[0].length;
+  let count = 0;
+  
+  // Helper function to perform DFS from a land cell
+  function dfs(r, c) {
+    // Check boundaries and if current cell is land
+    if (r < 0 || c < 0 || r >= rows || c >= cols || grid[r][c] === '0') {
+      return;
+    }
+    
+    // Mark current cell as visited by changing it to '0'
+    grid[r][c] = '0';
+    
+    // Explore all 4 directions
+    dfs(r + 1, c); // down
+    dfs(r - 1, c); // up
+    dfs(r, c + 1); // right
+    dfs(r, c - 1); // left
+  }
+  
+  // Traverse the grid
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      if (grid[r][c] === '1') {
+        count++;
+        dfs(r, c); // Start DFS from this land cell
+      }
+    }
+  }
+  
+  return count;
+}`
+  },
+  {
+    id: '15',
+    title: 'Course Schedule',
+    difficulty: 'Medium',
+    category: 'Graphs',
+    description: 'There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai. For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1. Return true if you can finish all courses. Otherwise, return false.',
+    starterCode: `function canFinish(numCourses, prerequisites) {
+  // Your code here
+}`,
+    testCases: [
+      {
+        input: 'numCourses = 2, prerequisites = [[1,0]]',
+        expected: 'true',
+      },
+      {
+        input: 'numCourses = 2, prerequisites = [[1,0],[0,1]]',
+        expected: 'false',
+      },
+      {
+        input: 'numCourses = 4, prerequisites = [[1,0],[2,1],[3,2]]',
+        expected: 'true',
+        isHidden: true,
+      },
+    ],
+    hints: [
+      'This problem can be modeled as a directed graph where each course is a node and prerequisites are directed edges.',
+      'Use topological sorting or cycle detection to determine if all courses can be finished.',
+    ],
+    solution: `function canFinish(numCourses, prerequisites) {
+  // Build an adjacency list representation of the graph
+  const graph = Array(numCourses).fill().map(() => []);
+  
+  for (const [course, prereq] of prerequisites) {
+    graph[prereq].push(course);
+  }
+  
+  // 0 = unvisited, 1 = visiting, 2 = visited
+  const visited = Array(numCourses).fill(0);
+  
+  // Helper function to detect cycles using DFS
+  function hasCycle(node) {
+    // If we're revisiting a node in the current DFS path, we found a cycle
+    if (visited[node] === 1) return true;
+    
+    // If we've already fully explored this node, no need to check again
+    if (visited[node] === 2) return false;
+    
+    // Mark current node as being visited
+    visited[node] = 1;
+    
+    // Visit all neighbors
+    for (const neighbor of graph[node]) {
+      if (hasCycle(neighbor)) return true;
+    }
+    
+    // Mark current node as fully visited
+    visited[node] = 2;
+    
+    return false;
+  }
+  
+  // Check for cycles starting from each unvisited node
+  for (let i = 0; i < numCourses; i++) {
+    if (visited[i] === 0 && hasCycle(i)) {
+      return false;
+    }
+  }
+  
+  return true;
+}`
+  },
+  {
+    id: '16',
+    title: 'Maximum Depth of Binary Tree',
+    difficulty: 'Easy',
+    category: 'Trees',
+    description: 'Given the root of a binary tree, return its maximum depth. A binary tree\'s maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.',
+    starterCode: `/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+function maxDepth(root) {
+  // Your code here
+}`,
+    testCases: [
+      {
+        input: 'root = [3,9,20,null,null,15,7]',
+        expected: '3',
+      },
+      {
+        input: 'root = [1,null,2]',
+        expected: '2',
+      },
+      {
+        input: 'root = []',
+        expected: '0',
+      },
+    ],
+    hints: [
+      'Consider using recursion to solve this problem.',
+      'The maximum depth is the maximum of the depths of the left and right subtrees plus 1.',
+    ],
+    solution: `/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+function maxDepth(root) {
+  // Base case: if the root is null, the depth is 0
+  if (!root) return 0;
+  
+  // Recursively find the depth of left and right subtrees
+  const leftDepth = maxDepth(root.left);
+  const rightDepth = maxDepth(root.right);
+  
+  // Return the maximum depth of the two subtrees, plus 1 for the current node
+  return Math.max(leftDepth, rightDepth) + 1;
+}`
+  },
+  {
+    id: '17',
+    title: 'Binary Tree Level Order Traversal',
+    difficulty: 'Medium',
+    category: 'Trees',
+    description: 'Given the root of a binary tree, return the level order traversal of its nodes\' values. (i.e., from left to right, level by level).',
+    starterCode: `/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+function levelOrder(root) {
+  // Your code here
+}`,
+    testCases: [
+      {
+        input: 'root = [3,9,20,null,null,15,7]',
+        expected: '[[3],[9,20],[15,7]]',
+      },
+      {
+        input: 'root = [1]',
+        expected: '[[1]]',
+      },
+      {
+        input: 'root = []',
+        expected: '[]',
+      },
+    ],
+    hints: [
+      'Use a breadth-first search (BFS) approach with a queue.',
+      'Process nodes level by level, using a nested loop structure.',
+    ],
+    solution: `/**
+ * Definition for a binary tree node.
+ * function TreeNode(val, left, right) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.left = (left===undefined ? null : left)
+ *     this.right = (right===undefined ? null : right)
+ * }
+ */
+function levelOrder(root) {
+  // If root is null, return empty array
+  if (!root) return [];
+  
+  const result = [];
+  const queue = [root];
+  
+  while (queue.length > 0) {
+    const levelSize = queue.length;
+    const currentLevel = [];
+    
+    // Process all nodes at the current level
+    for (let i = 0; i < levelSize; i++) {
+      const node = queue.shift();
+      currentLevel.push(node.val);
+      
+      // Add children to the queue for next level processing
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    
+    result.push(currentLevel);
+  }
+  
+  return result;
+}`
+  },
 ];
