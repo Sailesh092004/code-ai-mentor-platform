@@ -11,7 +11,6 @@ import {
   BarChart2,
   BookOpen,
   Trophy,
-  User,
   LogIn,
   UserPlus,
 } from "lucide-react";
@@ -45,19 +44,19 @@ const Navbar = () => {
             </div>
           )}
           <Button variant="ghost" className="gap-2" asChild>
-            <Link to="/">
+            <Link to="/learn">
               <BookOpen className="h-4 w-4" />
               <span>Learn</span>
             </Link>
           </Button>
           <Button variant="ghost" className="gap-2" asChild>
-            <Link to="/">
+            <Link to="/practice">
               <BarChart2 className="h-4 w-4" />
               <span>Practice</span>
             </Link>
           </Button>
           <Button variant="ghost" className="gap-2" asChild>
-            <Link to="/">
+            <Link to="/compete">
               <Trophy className="h-4 w-4" />
               <span>Compete</span>
             </Link>
@@ -101,19 +100,19 @@ const Navbar = () => {
             </div>
           )}
           <Button variant="ghost" className="w-full justify-start gap-2" asChild>
-            <Link to="/">
+            <Link to="/learn">
               <BookOpen className="h-4 w-4" />
               <span>Learn</span>
             </Link>
           </Button>
           <Button variant="ghost" className="w-full justify-start gap-2" asChild>
-            <Link to="/">
+            <Link to="/practice">
               <BarChart2 className="h-4 w-4" />
               <span>Practice</span>
             </Link>
           </Button>
           <Button variant="ghost" className="w-full justify-start gap-2" asChild>
-            <Link to="/">
+            <Link to="/compete">
               <Trophy className="h-4 w-4" />
               <span>Compete</span>
             </Link>
