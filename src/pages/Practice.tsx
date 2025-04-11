@@ -40,7 +40,7 @@ const Practice = () => {
     const matchesSearch = challenge.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           challenge.description.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = filters.length === 0 || 
-                            challenge.categories.some(category => filters.includes(category));
+                            filters.includes(challenge.category);
     
     return matchesDifficulty && matchesSearch && matchesCategory;
   });
